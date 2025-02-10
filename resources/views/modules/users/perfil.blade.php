@@ -61,6 +61,15 @@
                                required value="{{ auth()->user()->email }}" placeholder="Ingrese su correo">
                       </div>
                     </div>
+
+                    @error('email')
+                    <script type="text/javascript">
+                      document.addEventListener("DOMContentLoaded", function () {
+                        toastr.error('El email ya se encuentra registrado');
+                      });
+                    </script>
+                    @enderror
+                    
             
                     <div class="form-group">
                       <label for="password">Contraseña</label>
@@ -72,6 +81,8 @@
                                placeholder="Ingrese su nueva contraseña" autocomplete="new-password">
                       </div>
                     </div>
+
+                   
             
                     <div class="form-group">
                       <label for="photo">Foto de Perfil</label>
