@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Sucursales;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -112,7 +113,15 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        if(auth()->user()->rol != 'Administrador')
+        {
+            return redirect('home');
+        }
+
+        $usuarios = User::all();
+        $sucursales = Sucursales::where('estado', 1)->get();
+
+        return view('modules.users.usuarios', compact('usuarios', 'sucursales'));
     }
 
     /**
@@ -128,7 +137,33 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateEmail = request()->validate([
+            'email' => ['unique:users'],
+        ]);
+
+        $datos = request();
+
+        if($datos['rol'] == 'Administrador')
+        {
+            $id_sucursal = 0;
+        }else
+        {
+            $id_sucursal = $datos['id_sucursal'];
+        }
+
+        User::create([
+            'name' => $datos['name'],
+            'email' => $validateEmail['email'],
+            'photo' => null,
+            'estado' => 1,
+            'last_login' => null,
+            'rol' => $datos['rol'],
+            'password' => Hash::make($datos['password']),
+            'id_sucursal' => $id_sucursal,
+        ]);
+
+        return redirect('Usuarios')->with('success', 'Usuario creado con éxito');
+        
     }
 
     /**
@@ -137,6 +172,15 @@ class UsersController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    public function CambiarEstado($id_usuario, $estado)
+    {
+        User::find($id_usuario)->update([
+            'estado' => $estado
+        ]);
+
+        return redirect('Usuarios');
     }
 
     /**

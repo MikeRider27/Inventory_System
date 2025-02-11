@@ -6,7 +6,7 @@ use App\Http\Controllers\SucursalesController;
 
 Route::get('/', function () {
     return view('modules.users.login');
-});
+})->name('/');
 
 Route::get('/home', function () {
     return view('modules.home');
@@ -28,3 +28,6 @@ Route::get('Perfil', function () {
     return view('modules.users.perfil');
 });
 Route::post('Perfil', [UsersController::class, 'ActualizarPerfil']);
+Route::get('Usuarios', [UsersController::class, 'index']);
+Route::post('Usuarios', [UsersController::class, 'store']);
+Route::get('Cambiar-Estado-Usuario/{id_usuario}/{estado}', [UsersController::class, 'CambiarEstado']);

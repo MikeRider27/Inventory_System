@@ -41,7 +41,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('usuarios')}}" class="nav-link">
+                <a href="{{ url('Usuarios')}}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Usuarios</p>
                 </a>

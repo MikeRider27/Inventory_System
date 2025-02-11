@@ -66,6 +66,13 @@
                 </div>
                   
               @enderror
+
+              @if($errors->has('estado'))
+                <br>
+                <div class="alert alert-danger">
+                  {{ $errors->first('estado') }}
+                </div>
+              @endif
             </form>      
           
         

@@ -50,4 +50,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursales::class, 'id_sucursal');
+    }
 }

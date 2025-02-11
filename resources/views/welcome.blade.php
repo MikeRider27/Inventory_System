@@ -31,6 +31,10 @@
   <!-- Toastr -->
   <link rel="stylesheet" href="{{ url('plugins/toastr/toastr.min.css') }}">
 
+   <!-- Select2 -->
+   <link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css') }}">
+   <link rel="stylesheet" href="{{ url('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
   <!-- jQuery -->
   <script src="{{ url('plugins/jquery/jquery.min.js') }}"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -103,9 +107,12 @@
 <script src="{{ url('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 <script src="{{ url('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ url('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ url('plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- Toastr -->
 <script src="{{ url('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ url('js/plantilla.js') }}"></script>
+<script src="{{ url('js/usuarios.js') }}"></script>
 
 @if(session('success'))
     <script type="text/javascript">
