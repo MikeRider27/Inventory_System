@@ -65,19 +65,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('clientes')}}" class="nav-link">
+                <a href="{{ url('Clientes')}}" class="nav-link">
                     <i class="nav-icon fas fa-user-plus"></i>
                     <p>Clientes</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('ventas')}}" class="nav-link">
+                <a href="{{ url('Ventas')}}" class="nav-link">
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     <p>Administrar Ventas</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('reportes')}}" class="nav-link">
+                <a href="{{ url('Reportes')}}" class="nav-link">
                     <i class="nav-icon fas fa-chart-bar"></i>
                     <p>Reporte de Ventas</p>
                 </a>

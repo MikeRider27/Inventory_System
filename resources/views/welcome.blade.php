@@ -46,6 +46,9 @@
   <!-- jQuery UI 1.11.4 -->
   <script src="{{ url('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<!-- InputMask -->
+<script src="{{ url('plugins/moment/moment.min.js') }}"></script>
+<script src="{{ url('plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 </head>
 
 
@@ -124,6 +127,7 @@
 <script src="{{ url('js/plantilla.js') }}"></script>
 <script src="{{ url('js/usuarios.js') }}"></script>
 <script src="{{ url('js/productos.js') }}"></script>
+<script src="{{ url('js/clientes.js') }}"></script>
 
 @if(session('success'))
     <script type="text/javascript">

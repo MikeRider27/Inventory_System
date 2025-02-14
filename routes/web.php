@@ -5,6 +5,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SucursalesController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\HomeController;
 
 
 
@@ -12,9 +14,7 @@ Route::get('/', function () {
     return view('modules.users.login');
 })->name('/');
 
-Route::get('/home', function () {
-    return view('modules.home');
-});
+Route::get('home', [HomeController::class, 'index']);
 
 //Route::get('First-User', [UsersController::class, 'FirstUser']);
 
@@ -54,3 +54,8 @@ Route::post('Productos', [ProductosController::class, 'store']);
 Route::get('Editar-Producto/{id_producto}', [ProductosController::class, 'edit']);
 Route::put('Actualizar-Producto', [ProductosController::class, 'update']);
 Route::get('Eliminar-Producto/{id_producto}', [ProductosController::class, 'destroy']);
+
+//Clientes
+Route::get('Clientes', [ClientesController::class, 'index']);
+Route::post('Clientes', [ClientesController::class, 'store']);
+Route::post('Validar-Documento', [ClientesController::class, 'ValidarDocumento']);
