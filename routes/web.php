@@ -59,3 +59,4 @@ Route::get('Eliminar-Producto/{id_producto}', [ProductosController::class, 'dest
 Route::get('Clientes', [ClientesController::class, 'index']);
 Route::post('Clientes', [ClientesController::class, 'store']);
 Route::post('Validar-Documento', [ClientesController::class, 'ValidarDocumento']);
+Route::get('Editar-Cliente/{id_cliente}', [ClientesController::class, 'edit']);

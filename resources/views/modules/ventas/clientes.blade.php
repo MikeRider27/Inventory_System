@@ -68,7 +68,7 @@
                         <td>{{ $cliente->fecha_nacimiento }}</td>
                         <td></td>
                         <td></td>
-                        <td></td>                       
+                        <td><button class="btn btn-warning btn-sm btnEditarCliente" data-toggle="modal" data-target="#modal-editar" idcliente="{{ $cliente->id }}"><i class="fas fa-edit"></i></button></td>                       
                       </tr>
 
 
@@ -194,12 +194,11 @@
 
     <div class="modal fade" id="modal-editar">
       <div class="modal-dialog">
-          <form method="post" action="{{ url('Actualizar-Categoria') }}">
+          <form method="post" action="">
               @csrf
-              @method('put')
               <div class="modal-content">
                   <div class="modal-header bg-dark" style="color: white;">
-                      <h4 class="modal-title">Editar Categoria</h4>
+                      <h4 class="modal-title">Editar Clientes</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
@@ -210,19 +209,71 @@
                               <div class="input-group mb-3">
                                   <div class="input-group-append">
                                       <div class="input-group-text">
-                                        <span class="fas fa-building"></span>
+                                        <span class="fas fa-user"></span>
                                       </div>
                                     </div>
-                                  <input type="hidden" class="form-control" name="id" id="idEditar" required>
-                                  <input type="text" class="form-control" placeholder="Ingresa Categoria" name="nombre" id="nombreEditar" required>
-                                 
+                                  <input type="text" class="form-control" placeholder="Ingresa Nombre" id="nombreClienteEditar" name="nombre" required>
+                                  <input type="hidden" class="form-control" id="idClienteEditar" name="id">  
                                 </div>
-                          </div>                           
+                          </div> 
+                          <div class="col-12 col-sm-12">
+                            <div class="input-group mb-3">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-key"></span>
+                                    </div>
+                                  </div>
+                                <input type="text" class="form-control" placeholder="Ingresa Documento" id="nuevoDocumentoEditar" name="documento" required> 
+                              </div>
+                        </div>   
+                        <div class="col-12 col-sm-12">
+                          <div class="input-group mb-3">
+                              <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                  </div>
+                                </div>
+                              <input type="email" class="form-control" placeholder="Ingresa Email" id="emailEditar" name="email" required> 
+                            </div>
+                      </div>   
+                      <div class="col-12 col-sm-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <span class="fas fa-phone"></span>
+                                </div>
+                              </div>
+                            <input type="text" class="form-control" data-inputmask='"mask": "(999) 999-999"'
+                            data-mask placeholder="Ingresa Telefono" id="telefonoEditar" name="telefono" required> 
+                          </div>
+                    </div> 
+                    <div class="col-12 col-sm-12">
+                      <div class="input-group mb-3">
+                          <div class="input-group-append">
+                              <div class="input-group-text">
+                                <span class="fas fa-map-marker"></span>
+                              </div>
+                            </div>
+                          <input type="text" class="form-control" placeholder="Ingresa Direccion" id="direccionEditar" name="direccion" required> 
+                        </div>
+                  </div>  
+                  <div class="col-12 col-sm-12">
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-calendar"></span>
+                            </div>
+                          </div>
+                        <input type="text" class="form-control" placeholder="Ingresa Fecha de Nacimiento" data-inputmask-alias="datetime"
+                        data-inputmask-inputformat="dd/mm/yyyy"
+                        data-mask id="fechaNacimientoEditar" name="fecha_nacimiento" required> 
+                      </div>
+                </div>                 
                       </div>
                   </div>
                   <div class="modal-footer justify-content-between">
                       <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>                    
-                      <button id="guardar" type="submit" class="btn btn-success">Guardar</button>
+                      <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
                   </div>
               </div>
           </form>

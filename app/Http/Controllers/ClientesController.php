@@ -18,7 +18,7 @@ class ClientesController extends Controller
     public function index()
     {
         $clientes = Clientes::where('estado', 1)->get();
-        
+
         return view('modules.ventas.clientes', compact('clientes'));
     }
 
@@ -60,13 +60,33 @@ class ClientesController extends Controller
      */
     public function ValidarDocumento(Request $request)
     {
-        $cliente = Clientes::where('documento', $request->documento)->exists();
+        if($request->id == 0){
 
-        if($cliente == null){
-            $respuesta = true;            
+            $cliente = Clientes::where('documento', $request->documento)->exists();
+            
+            if($cliente == null){
+                $respuesta = true;
+            }else{
+                $respuesta = false;
+            }
         }else{
-            $respuesta = false; 
+
+            $cliente = Clientes::find($request->id);
+
+            if($cliente->documento != $request->documento){
+
+                $documentoExiste = Clientes::where('documento', $request->documento)->exists();
+                
+                if($documentoExiste == null){
+                    $respuesta = true;
+                }else{
+                    $respuesta = false;
+                }
+            }else{
+                $respuesta = false;
+            }
         }
+        
 
         return response()->json($respuesta);
 
@@ -77,9 +97,11 @@ class ClientesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Clientes $clientes)
+    public function edit($id_cliente)
     {
-        //
+        $cliente = Clientes::find($id_cliente);
+
+        return response()->json($cliente);
     }
 
     /**
