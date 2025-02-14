@@ -53,13 +53,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('categorias')}}" class="nav-link">
+                <a href="{{ url('Categorias')}}" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Categorias</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('productos')}}" class="nav-link">
+                <a href="{{ url('Productos')}}" class="nav-link">
                     <i class="nav-icon fas fa-cubes"></i>
                     <p>Productos</p>
                 </a>

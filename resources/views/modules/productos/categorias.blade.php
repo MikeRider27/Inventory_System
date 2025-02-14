@@ -11,7 +11,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Sucursales</h1>
+              <h1 class="m-0">Categorias</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -36,7 +36,7 @@
                     <h3 class="card-title" style="display: inline-block;"></h3>
                   </div>
                   <div class="float-right">                 
-                      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal-agregar"><i class="fas fa-plus"></i> Agregar Sucursal</a>                   
+                      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal-agregar"><i class="fas fa-plus"></i> Agregar Categoria</a>                   
                   </div>
                 </div>
                 <!-- /.card-header -->
@@ -45,39 +45,28 @@
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Estado</th>
+                        <th>Nombre</th>                     
                         <th>Accion</th>                        
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($sucursales as $sucursal)
+                      @foreach($categorias as $key => $categoria)
                       <tr>
-                        <td>{{ $sucursal->id }}</td>
-                        <td>{{ $sucursal->nombre }}</td>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $categoria->nombre }}</td>
                         <td>
-                          @if($sucursal->estado == 1)
-                          <span class="badge badge-success">Activo</span>
-                          @else
-                          <span class="badge badge-danger">Inactivo</span>
-                          @endif
+                          <button class="btn btn-warning btn-sm btnEditarCategoria" data-toggle="modal" data-target="#modal-editar" idcategoria="{{ $categoria->id }}"><i class="fas fa-edit"></i></button>
+                          <button class="btn btn-danger btn-sm btnEliminarCategoria" categoria="{{ $categoria->nombre }}" idcategoria="{{ $categoria->id }}"><i class="fas fa-trash"></i></button>
                         </td>
-                        <td>
-                          <button class="btn btn-warning btn-sm btnEditarSucursal" data-toggle="modal" data-target="#modal-editar" idsucursal="{{ $sucursal->id }}"><i class="fas fa-edit"></i></button>
-                          @if($sucursal->estado == 0)
-                          <a href="Cambiar-Estado-Sucursal/1/{{ $sucursal->id }}" class="btn btn-success btn-sm"><i class="fas fa-lock-open"></i></a>
-                          @else
-                          <a href="Cambiar-Estado-Sucursal/0/{{ $sucursal->id }}" class="btn btn-danger btn-sm"><i class="fas fa-lock"></i></a>
-                          @endif                         
-                        </td>
+                          
+                        
                       </tr>
                       @endforeach
                     </tbody>
                     <tfoot>
                       <tr>
                         <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Estado</th>
+                        <th>Nombre</th>                  
                         <th>Accion</th>                              
                       </tr>
                     </tfoot>
@@ -102,7 +91,7 @@
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header bg-dark" style="color: white;">
-                        <h4 class="modal-title">Agregar Sucursal</h4>
+                        <h4 class="modal-title">Agregar Categoria</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -113,11 +102,10 @@
                                 <div class="input-group mb-3">
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                          <span class="fas fa-building"></span>
+                                          <span class="fas fa-th"></span>
                                         </div>
                                       </div>
-                                    <input type="text" class="form-control" placeholder="Ingresa Sucursal" name="nombre" required>
-                                   
+                                    <input type="text" class="form-control" placeholder="Ingresa Categoria" name="nombre" required> 
                                   </div>
                             </div>                           
                         </div>
@@ -135,12 +123,12 @@
 
     <div class="modal fade" id="modal-editar">
       <div class="modal-dialog">
-          <form method="post" action="{{ url('Actualizar-Sucursal') }}">
+          <form method="post" action="{{ url('Actualizar-Categoria') }}">
               @csrf
               @method('put')
               <div class="modal-content">
                   <div class="modal-header bg-dark" style="color: white;">
-                      <h4 class="modal-title">Editar Sucursal</h4>
+                      <h4 class="modal-title">Editar Categoria</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
@@ -155,7 +143,7 @@
                                       </div>
                                     </div>
                                   <input type="hidden" class="form-control" name="id" id="idEditar" required>
-                                  <input type="text" class="form-control" placeholder="Ingresa Sucursal" name="nombre" id="nombreEditar" required>
+                                  <input type="text" class="form-control" placeholder="Ingresa Categoria" name="nombre" id="nombreEditar" required>
                                  
                                 </div>
                           </div>                           

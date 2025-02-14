@@ -186,24 +186,90 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id_usuario)
     {
-        //
+        $usuario = User::find($id_usuario);     
+
+        return response()->json($usuario);
     }
 
+    public function VerificarUsuario(Request $request)      
+    {
+        $user = User::find($request->id);
+        
+        if($request->email != $user->email)
+        {
+            $emailExist = User::where('email', $request->email)->exists();
+            if($emailExist != null)
+            {
+                $verificacion = false;
+            }
+            else{
+                $verificacion = true;
+            }
+        }else{
+            $verificacion = true;
+        }
+
+        return response()->json(['verificacion' => $verificacion]);
+    }
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        if(request('password'))
+        {
+            $validarPass = request()->validate([
+                'password' => ['string', 'min:3'],
+            ]);
+            $pass = true;
+        }else
+        {
+            $pass = false;
+        }
+        $datos = request();
+
+        if($datos['rol'] == 'Administrador')
+        {
+            $id_sucursal = 0;
+        }else
+        {
+            $id_sucursal = $datos['id_sucursal'];
+        }
+
+        $User = User::find($datos['id']);
+        $User->name = $datos['name'];
+        $User->email = $datos['email'];
+
+        if($pass != false)
+        {
+            $User->password = Hash::make($datos['password']);
+        }
+        $User->rol = $datos['rol'];
+        $User->id_sucursal = $id_sucursal;
+        $User->save();
+
+        return redirect('Usuarios')->with('success', 'Usuario actualizado con éxito');
+     
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id_usuario)
     {
-        //
+        $usuario = User::find($id_usuario);
+        
+        if($usuario->photo != '')
+        {
+            $path = storage_path('app/public/' . $usuario->photo);
+            unlink($path);
+        }
+
+        $usuario->destroy($id_usuario);
+
+        return redirect('Usuarios');
     }
 }

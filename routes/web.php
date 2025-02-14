@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SucursalesController;
+use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\ProductosController;
+
+
 
 Route::get('/', function () {
     return view('modules.users.login');
@@ -31,3 +35,22 @@ Route::post('Perfil', [UsersController::class, 'ActualizarPerfil']);
 Route::get('Usuarios', [UsersController::class, 'index']);
 Route::post('Usuarios', [UsersController::class, 'store']);
 Route::get('Cambiar-Estado-Usuario/{id_usuario}/{estado}', [UsersController::class, 'CambiarEstado']);
+Route::get('Editar-Usuario/{id_usuario}', [UsersController::class, 'edit']);
+Route::post('Verificar-Usuario', [UsersController::class, 'VerificarUsuario']);
+Route::put('Actualizar-Usuario', [UsersController::class, 'update']);
+Route::get('Eliminar-Usuario/{id_usuario}', [UsersController::class, 'destroy']);
+
+//Categorias
+Route::get('Categorias', [CategoriasController::class, 'index']);
+Route::post('Categorias', [CategoriasController::class, 'store']);
+Route::get('Editar-Categoria/{id_categoria}', [CategoriasController::class, 'edit']);
+Route::put('Actualizar-Categoria', [CategoriasController::class, 'update']);
+Route::get('Eliminar-Categoria/{id_categoria}', [CategoriasController::class, 'destroy']);
+
+//Productos
+Route::get('Productos', [ProductosController::class, 'index']);
+Route::get('Generar-Codigo-Producto/{id_categoria}', [ProductosController::class, 'GenerarCodigo']);
+Route::post('Productos', [ProductosController::class, 'store']);
+Route::get('Editar-Producto/{id_producto}', [ProductosController::class, 'edit']);
+Route::put('Actualizar-Producto', [ProductosController::class, 'update']);
+Route::get('Eliminar-Producto/{id_producto}', [ProductosController::class, 'destroy']);

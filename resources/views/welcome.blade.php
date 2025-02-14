@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+   
   <title>Alchemy - Inventory</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -15,7 +19,6 @@
   <link rel="stylesheet" href="{{ url('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ url('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ url('dist/css/adminlte.min.css') }}">
   <!-- overlayScrollbars -->
@@ -30,10 +33,13 @@
   <link rel="stylesheet" href="{{ url('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{ url('plugins/toastr/toastr.min.css') }}">
-
-   <!-- Select2 -->
-   <link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css') }}">
-   <link rel="stylesheet" href="{{ url('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ url('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{ url('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{ url('plugins/iCheck/all.css') }}">
 
   <!-- jQuery -->
   <script src="{{ url('plugins/jquery/jquery.min.js') }}"></script>
@@ -109,10 +115,15 @@
 <script src="{{ url('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ url('plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- SweetAlert2 -->
+<script src="{{ url('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<!-- iCheck -->
+<script src="{{ url('plugins/iCheck/icheck.min.js') }}"></script>
 <!-- Toastr -->
 <script src="{{ url('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ url('js/plantilla.js') }}"></script>
 <script src="{{ url('js/usuarios.js') }}"></script>
+<script src="{{ url('js/productos.js') }}"></script>
 
 @if(session('success'))
     <script type="text/javascript">
