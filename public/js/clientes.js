@@ -60,7 +60,46 @@ $("#nuevoDocumentoEditar").change(function () {
 
             if(respuesta == false){
                 $("#nuevoDocumentoEditar").parent().after('<div class="alert alert-danger">Este Documento ya se encuentra registrado.</div>');
+
+                $("#nuevoDocumentoEditar").val('');
             }         
         }
     });
+});
+
+
+$("#listado").on("click", ".btnEliminarCliente", function () {
+
+    var Cid = $(this).attr("idcliente");
+    var nombre = $(this).attr("cliente");    
+
+    Swal.fire({
+        title: '¿Estás seguro de eliminar el cliente: ' +nombre+' ?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "Eliminar-Cliente/" + Cid,
+                type: "GET",
+                success: function () {
+                    Swal.fire(
+                        '¡Eliminado!',
+                        'El cliente ha sido eliminado.',
+                        'success'
+                    ).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+        }
+    });
+
 });

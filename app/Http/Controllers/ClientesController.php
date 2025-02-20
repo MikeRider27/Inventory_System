@@ -17,7 +17,15 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        $clientes = Clientes::where('estado', 1)->get();
+        //$clientes = Clientes::where('estado', 1)->get();
+
+        $clientes = Clientes::leftJoin('ventas', 'clientes.id', '=', 'ventas.id_cliente')
+        ->select('clientes.id', 'clientes.nombre', 'clientes.documento', 'clientes.email', 'clientes.direccion', 'clientes.telefono', 'clientes.fecha_nacimiento', 'clientes.estado', \DB::raw('MAX(ventas.fecha) as ultima_compra'),  \DB::raw('COUNT(ventas.id) as cantidad_compras'))
+        ->where('clientes.estado', 1)
+        ->groupBy('clientes.id', 'clientes.nombre', 'clientes.documento', 'clientes.email', 'clientes.direccion', 'clientes.telefono', 'clientes.fecha_nacimiento', 'clientes.estado')
+        ->get();
+    
+
 
         return view('modules.ventas.clientes', compact('clientes'));
     }
@@ -107,16 +115,35 @@ class ClientesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Clientes $clientes)
+    public function update(Request $request)
     {
-        //
+        $datos = request();
+
+        $cliente = Clientes::find($datos["id"]);
+
+        $cliente->update([
+            'nombre' => $datos["nombre"],
+            'email' => $datos["email"],
+            'direccion' => $datos["direccion"],
+            'fecha_nacimiento' => $datos["fecha_nacimiento"],
+            'telefono' => $datos["telefono"],
+            'documento' => $datos["documento"]
+        ]);
+
+        return redirect('Clientes')->with('success', 'Cliente actualizado con éxito');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Clientes $clientes)
+    public function destroy($id_cliente)
     {
-        //
+        $cliente = Clientes::find($id_cliente);
+
+        $cliente->update([
+            'estado' => 0
+        ]);
+
+        return redirect('Clientes');
     }
 }

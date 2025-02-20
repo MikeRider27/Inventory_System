@@ -7,7 +7,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\VentasController;
 
 
 Route::get('/', function () {
@@ -60,3 +60,10 @@ Route::get('Clientes', [ClientesController::class, 'index']);
 Route::post('Clientes', [ClientesController::class, 'store']);
 Route::post('Validar-Documento', [ClientesController::class, 'ValidarDocumento']);
 Route::get('Editar-Cliente/{id_cliente}', [ClientesController::class, 'edit']);
+Route::put('Actualizar-Cliente', [ClientesController::class, 'update']);
+Route::get('Eliminar-Cliente/{id_cliente}', [ClientesController::class, 'destroy']);
+
+//Ventas
+Route::get('Ventas', [VentasController::class, 'index']);
+Route::post('Ventas', [VentasController::class, 'store']);
+Route::get('Venta/{id_venta}', [VentasController::class, 'show']);

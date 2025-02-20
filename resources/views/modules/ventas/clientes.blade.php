@@ -66,9 +66,16 @@
                         <td>{{ $cliente->telefono }}</td>
                         <td>{{ $cliente->direccion }}</td>
                         <td>{{ $cliente->fecha_nacimiento }}</td>
-                        <td></td>
-                        <td></td>
-                        <td><button class="btn btn-warning btn-sm btnEditarCliente" data-toggle="modal" data-target="#modal-editar" idcliente="{{ $cliente->id }}"><i class="fas fa-edit"></i></button></td>                       
+                        <td>{{ $cliente->cantidad_compras}}</td>
+                        <td>
+                          @if($cliente->ultima_compra)
+                              {{ \Carbon\Carbon::parse($cliente->ultima_compra)->format('d/m/Y H:i:s') }}
+                          @endif
+                      </td>
+                        <td>
+                          <button class="btn btn-warning btn-sm btnEditarCliente" data-toggle="modal" data-target="#modal-editar" idcliente="{{ $cliente->id }}"><i class="fas fa-edit"></i></button>
+                          <button class="btn btn-danger btn-sm btnEliminarCliente" idcliente="{{ $cliente->id }}" cliente="{{ $cliente->nombre }}"><i class="fas fa-trash"></i></button>
+                        </td>                       
                       </tr>
 
 
@@ -194,8 +201,9 @@
 
     <div class="modal fade" id="modal-editar">
       <div class="modal-dialog">
-          <form method="post" action="">
+          <form method="post" action="{{ url('Actualizar-Cliente') }}">
               @csrf
+              @method('put')
               <div class="modal-content">
                   <div class="modal-header bg-dark" style="color: white;">
                       <h4 class="modal-title">Editar Clientes</h4>
