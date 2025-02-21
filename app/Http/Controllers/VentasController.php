@@ -6,6 +6,7 @@ use App\Models\Ventas;
 use App\Models\Sucursales;
 use App\Models\Clientes;
 use App\Models\Productos;
+use App\Models\DetalleVenta;
 use Illuminate\Http\Request;
 
 class VentasController extends Controller
@@ -73,7 +74,12 @@ class VentasController extends Controller
     public function show($id_venta)
     {
         $venta = Ventas::find($id_venta);
-        $productos = Productos::all();
+        $productos = Productos::leftJoin('detalle_venta', function($join) use ($id_venta) {
+            $join->on('productos.id', '=', 'detalle_venta.id_producto')
+                 ->where('detalle_venta.id_venta', $id_venta);
+        })
+        ->select('productos.*', 'detalle_venta.id as en_venta')
+        ->get();
 
         return view('modules.ventas.venta', compact('venta', 'productos'));
     }
@@ -81,17 +87,48 @@ class VentasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ventas $ventas)
+    public function AgregarProductoVenta(Request $request)    
     {
-        //
+        $producto = Productos::find($request->idproducto);
+       
+        DetalleVenta::insert([
+            'id_venta' => $request->idventa,
+            'id_producto' => $request->idproducto,
+            'cantidad' => 1,
+            'precio' => $producto->precio_venta,
+        ]);
+
+        Ventas::find($request->idventa)->update([
+            'estado' => 'En Proceso'
+        ]);
+
+        return response()->json([
+            'id' => $producto->id,
+            'descripcion' => $producto->descripcion,
+            'stock' => $producto->stock,
+            'cantidad' => 1,
+            'precio_venta' => $producto->precio_venta,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ventas $ventas)
+    public function CargarProductosVenta($id_venta)
     {
-        //
+        $productos = DetalleVenta::join('ventas', 'detalle_venta.id_venta', '=', 'ventas.id')
+        ->join('productos', 'detalle_venta.id_producto', '=', 'productos.id')
+        ->select([
+            'detalle_venta.id_venta',
+            'ventas.estado',
+            'detalle_venta.id_producto',
+            'productos.descripcion',
+            'detalle_venta.cantidad',
+            'detalle_venta.precio',
+        ])
+        ->get();
+
+        return response()->json(['productos' => $productos]);
     }
 
     /**

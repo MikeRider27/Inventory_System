@@ -67,3 +67,5 @@ Route::get('Eliminar-Cliente/{id_cliente}', [ClientesController::class, 'destroy
 Route::get('Ventas', [VentasController::class, 'index']);
 Route::post('Ventas', [VentasController::class, 'store']);
 Route::get('Venta/{id_venta}', [VentasController::class, 'show']);
+Route::post('Agregar-Producto-Venta', [VentasController::class, 'AgregarProductoVenta']);  
+Route::get('Cargar-Productos-Venta/{id_venta}', [VentasController::class, 'CargarProductosVenta']);

@@ -13,7 +13,7 @@ var table = $("#listado").DataTable({
         lengthMenu: "Mostrar _MENU_ registros",
         loadingRecords: "Cargando...",
         processing: "Procesando...",
-        search: "Filtrar por (Nombre):",
+        search: "Buscar:",
         zeroRecords: "No se encontraron registros que coincidan",
         paginate: {
             first: "Primero",
@@ -27,6 +27,38 @@ var table = $("#listado").DataTable({
         },
     },
 });
+
+var tableProductos = $("#listadoProductos").DataTable({
+    responsive: true,
+
+    autoWidth: false,
+    language: {
+        decimal: "",
+        emptyTable: "No hay registros en la tabla",
+        info: "Se muestran _START_ a _END_ de _TOTAL_ registros",
+        infoEmpty: "Se muestran 0 a 0 de 0 registros",
+        infoFiltered: "(filtrado de _MAX_ registros totales)",
+        infoPostFix: "",
+        thousands: ",",
+        lengthMenu: "Mostrar _MENU_ registros",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "No se encontraron registros que coincidan",
+        paginate: {
+            first: "Primero",
+            last: "Último",
+            next: "Siguiente",
+            previous: "Anterior",
+        },
+        aria: {
+            sortAscending: ": activar para ordenar la columna ascendente",
+            sortDescending: ": activar para ordenar la columna descendente",
+        },
+    },
+});
+
+
 
 //Editar Sucursal ===================================
 $("#listado").on("click", ".btnEditarSucursal", function () {

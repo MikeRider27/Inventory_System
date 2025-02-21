@@ -29,7 +29,7 @@
         <div class="container-fluid">
           <div class="row">
             <!-- left column -->
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
               <!-- General form elements -->
               <div class="card card-success">
                 <div class="card-header">                 
@@ -76,19 +76,22 @@
                     </div>
                 
                     <!-- Campos ocultos -->
-                    <div class="row">
+                    <div class="row ProductosVenta">
                         <div class="col-12 col-sm-12 mb-3">
                             <div class="form-group">
-                                <input type="hidden" id="idVenta" value="{{ $venta->id }}">
+                                <input type="hidden" id="idventa" value="{{ $venta->id }}">
                                 <input type="hidden" id="url" value="{{ url('') }}">
+                                <input type="hidden" id="url" value="{{ $venta->estado }}">
+
                             </div>
                         </div>
+                      
                     </div>
                 
                     <!-- Botón para agregar producto -->
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <button class="btn btn-default d-lg-none" id="btnAgregar">Agregar Producto</button>
+                            <button class="btn btn-default" data-toggle="modal" data-target="#modal-agregar">Agregar Producto</button>
                         </div>
                     </div>
                 
@@ -150,7 +153,7 @@
               <!-- /.card -->
             </div>
 
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
               <!-- General form elements -->
               <div class="card card-warning">
                 <div class="card-header">
@@ -163,7 +166,7 @@
                     <table id="listado" class="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
-                          <th style="width: 10px">ID</th>
+                          <th>ID</th>
                           <th>Imagen</th>
                           <th>Codigo</th>
                           <th>Descripcion</th>
@@ -194,7 +197,17 @@
                             @endif
                           </td>
                           <td>
-                            <button class="btn btn-primary btn-sm" id="btnAgregarProducto" data-id="{{ $producto->id }}" data-codigo="{{ $producto->codigo }}" data-descripcion="{{ $producto->descripcion }}" data-precio="{{ $producto->precio }}" data-stock="{{ $producto->stock }}"><i class="fas fa-plus"></i> Agregar</button>                          
+                            @if($venta->estado != 'Finalizado')
+                                @if($producto->stock > 0)
+                                    @if($producto->en_venta)
+                                    <button class="btn btn-secondary btn-sm" disabled><i class="fas fa-plus"></i> Agregar</button>
+                                    @else
+                                    <button class="btn btn-primary btn-sm btnAgregarProducto" idproducto="{{ $producto->id }}"><i class="fas fa-plus"></i> Agregar</button>
+                                    @endif
+                                @else
+                                <button class="btn btn-secondary btn-sm" disabled><i class="fas fa-plus"></i> Agregar</button>
+                                @endif 
+                            @endif                         
                           </td>
                         </tr>
                         @endforeach
@@ -216,6 +229,85 @@
       </section>
       <!-- /.content -->
     </div>
+
+    <div class="modal fade" id="modal-agregar">
+      <div class="modal-dialog modal-lg">
+          <form method="post" action="">
+              @csrf
+              <div class="modal-content">
+                  <div class="modal-header bg-dark" style="color: white;">
+                      <h4 class="modal-title">Agregar Clientes</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                        <div class="col-12 col-md-12">
+                            <table id="listadoProductos" class="table table-bordered table-striped table-hover">
+                              <thead>
+                                <tr>
+                                  <th>ID</th>
+                                  <th>Imagen</th>
+                                  <th>Codigo</th>
+                                  <th>Descripcion</th>
+                                  <th>Stock</th>
+                                  <th>Accion</th>                        
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach ($productos as $key => $producto)
+                                <tr>
+                                  <td>{{ $key + 1 }}</td>
+                                  <td> 
+                                    @if ($producto->imagen == "")
+                                    <img src="{{ url('storage/products/default.png') }}" class="img-thumbnail" alt="User Image" style="width: 50px; height: 50px;">
+                                    @else
+                                    <img src="{{ url('storage/' . $producto->imagen) }}" class="img-thumbnail" alt="User Image" style="width: 50px; height: 50px;">
+                                    @endif
+                                  </td>
+                                  <td>{{ $producto->codigo }}</td>
+                                  <td>{{ $producto->descripcion }}</td>
+                                  <td>
+                                    @if($producto->stock <= 10)
+                                    <span class="badge badge-danger">{{ $producto->stock }}</span>
+                                    @elseif($producto->stock <= 15)
+                                    <span class="badge badge-warning">{{ $producto->stock }}</span>
+                                    @else
+                                    <span class="badge badge-success">{{ $producto->stock }}</span>
+                                    @endif
+                                  </td>
+                                  <td>
+                                    @if($venta->estado != 'Finalizado')
+                                        @if($producto->stock > 0)
+                                            @if($producto->en_venta)
+                                            <button class="btn btn-secondary btn-sm" disabled><i class="fas fa-plus"></i> Agregar</button>
+                                            @else
+                                            <button class="btn btn-primary btn-sm btnAgregarProducto" idproducto="{{ $producto->id }}"><i class="fas fa-plus"></i> Agregar</button>
+                                            @endif
+                                        @else
+                                        <button class="btn btn-secondary btn-sm" disabled><i class="fas fa-plus"></i> Agregar</button>
+                                        @endif 
+                                    @endif                         
+                                  </td>
+                                </tr>
+                                @endforeach
+
+                              </tbody>                      
+                            </table>
+                        </div>                              
+                      </div>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>                    
+                  </div>
+              </div>
+          </form>
+          <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+  </div>
+
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <strong>Copyright &copy; 2025 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>

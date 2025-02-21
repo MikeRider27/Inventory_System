@@ -128,6 +128,7 @@
 <script src="{{ url('js/usuarios.js') }}"></script>
 <script src="{{ url('js/productos.js') }}"></script>
 <script src="{{ url('js/clientes.js') }}"></script>
+<script src="{{ url('js/ventas.js') }}"></script>
 
 @if(session('success'))
     <script type="text/javascript">
